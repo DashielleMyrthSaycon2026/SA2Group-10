@@ -1,6 +1,12 @@
 """
 PSHS Grade Calculator
-Computes a PSHS scholar's final quarter grade based on assessment scores.
+Computes a PSHS scholar's final quarter grade based on SA (Summative Assessment) 
+and FA (Formative Assessment) scores.
+
+Grading Formula:
+- Current Grade = (SA_Average × 0.70) + (FA_Average × 0.30)
+- SA counts 70% of quarter grade
+- FA counts 30% of quarter grade
 """
 
 def get_adjectival_equivalent(percentage):
@@ -37,63 +43,154 @@ def get_adjectival_equivalent(percentage):
         return (5.00, "FAILED")
 
 
-def calculate_q1(tentative_q1):
+def calculate_sa_average(sa_scores):
     """
-    Calculate Q1 (First Quarter) grade.
-    Q1 = Tentative Grade of Q1
+    Calculate the average of Summative Assessment scores.
     
     Args:
-        tentative_q1 (float): The raw performance score for Q1
+        sa_scores (list): List of SA scores
     
     Returns:
-        float: Q1 grade
+        float: Average of SA scores
     """
-    return tentative_q1
+    if not sa_scores or len(sa_scores) == 0:
+        return 0
+    return sum(sa_scores) / len(sa_scores)
 
 
-def calculate_q2(q1, tentative_q2):
+def calculate_fa_average(fa_scores):
     """
-    Calculate Q2 (Second Quarter) grade.
+    Calculate the average of Formative Assessment scores.
+    
+    Args:
+        fa_scores (list): List of FA scores
+    
+    Returns:
+        float: Average of FA scores
+    """
+    if not fa_scores or len(fa_scores) == 0:
+        return 0
+    return sum(fa_scores) / len(fa_scores)
+
+
+def calculate_current_grade(sa_average, fa_average):
+    """
+    Calculate the current quarter grade using weighted formula.
+    Current Grade = (SA_Average × 0.70) + (FA_Average × 0.30)
+    
+    Args:
+        sa_average (float): Average of SA scores
+        fa_average (float): Average of FA scores
+    
+    Returns:
+        float: Current quarter grade
+    """
+    return (sa_average * 0.70) + (fa_average * 0.30)
+
+
+def calculate_q1_final_grade(sa_scores_q1, fa_scores_q1):
+    """
+    Calculate Q1 (First Quarter) final grade.
+    Q1 = Tentative Grade of Q1 (current quarter calculation)
+    
+    Args:
+        sa_scores_q1 (list): SA scores for Q1
+        fa_scores_q1 (list): FA scores for Q1
+    
+    Returns:
+        dict: Contains Q1 grade info
+    """
+    sa_avg = calculate_sa_average(sa_scores_q1)
+    fa_avg = calculate_fa_average(fa_scores_q1)
+    q1_grade = calculate_current_grade(sa_avg, fa_avg)
+    
+    return {
+        'sa_average': round(sa_avg, 2),
+        'fa_average': round(fa_avg, 2),
+        'quarter_grade': round(q1_grade, 2),
+        'grade_info': get_final_grade_info(q1_grade)
+    }
+
+
+def calculate_q2_final_grade(q1_grade, sa_scores_q2, fa_scores_q2):
+    """
+    Calculate Q2 (Second Quarter) final grade.
     Q2 = (Q1 + 2(Tentative Q2)) / 3
     
     Args:
-        q1 (float): Q1 grade
-        tentative_q2 (float): The raw performance score for Q2
+        q1_grade (float): Q1 final grade
+        sa_scores_q2 (list): SA scores for Q2
+        fa_scores_q2 (list): FA scores for Q2
     
     Returns:
-        float: Q2 grade
+        dict: Contains Q2 grade info
     """
-    return (q1 + 2 * tentative_q2) / 3
+    sa_avg = calculate_sa_average(sa_scores_q2)
+    fa_avg = calculate_fa_average(fa_scores_q2)
+    tentative_q2 = calculate_current_grade(sa_avg, fa_avg)
+    q2_grade = (q1_grade + 2 * tentative_q2) / 3
+    
+    return {
+        'sa_average': round(sa_avg, 2),
+        'fa_average': round(fa_avg, 2),
+        'tentative_grade': round(tentative_q2, 2),
+        'quarter_grade': round(q2_grade, 2),
+        'grade_info': get_final_grade_info(q2_grade)
+    }
 
 
-def calculate_q3(q2, tentative_q3):
+def calculate_q3_final_grade(q2_grade, sa_scores_q3, fa_scores_q3):
     """
-    Calculate Q3 (Third Quarter) grade.
+    Calculate Q3 (Third Quarter) final grade.
     Q3 = (Q2 + 2(Tentative Q3)) / 3
     
     Args:
-        q2 (float): Q2 grade
-        tentative_q3 (float): The raw performance score for Q3
+        q2_grade (float): Q2 final grade
+        sa_scores_q3 (list): SA scores for Q3
+        fa_scores_q3 (list): FA scores for Q3
     
     Returns:
-        float: Q3 grade
+        dict: Contains Q3 grade info
     """
-    return (q2 + 2 * tentative_q3) / 3
+    sa_avg = calculate_sa_average(sa_scores_q3)
+    fa_avg = calculate_fa_average(fa_scores_q3)
+    tentative_q3 = calculate_current_grade(sa_avg, fa_avg)
+    q3_grade = (q2_grade + 2 * tentative_q3) / 3
+    
+    return {
+        'sa_average': round(sa_avg, 2),
+        'fa_average': round(fa_avg, 2),
+        'tentative_grade': round(tentative_q3, 2),
+        'quarter_grade': round(q3_grade, 2),
+        'grade_info': get_final_grade_info(q3_grade)
+    }
 
 
-def calculate_q4(q3, tentative_q4):
+def calculate_q4_final_grade(q3_grade, sa_scores_q4, fa_scores_q4):
     """
     Calculate Q4 (Fourth Quarter/Final Grade).
     Q4 = (Q3 + 2(Tentative Q4)) / 3
     
     Args:
-        q3 (float): Q3 grade
-        tentative_q4 (float): The raw performance score for Q4
+        q3_grade (float): Q3 final grade
+        sa_scores_q4 (list): SA scores for Q4
+        fa_scores_q4 (list): FA scores for Q4
     
     Returns:
-        float: Q4 (Final) grade
+        dict: Contains Q4 grade info
     """
-    return (q3 + 2 * tentative_q4) / 3
+    sa_avg = calculate_sa_average(sa_scores_q4)
+    fa_avg = calculate_fa_average(fa_scores_q4)
+    tentative_q4 = calculate_current_grade(sa_avg, fa_avg)
+    q4_grade = (q3_grade + 2 * tentative_q4) / 3
+    
+    return {
+        'sa_average': round(sa_avg, 2),
+        'fa_average': round(fa_avg, 2),
+        'tentative_grade': round(tentative_q4, 2),
+        'quarter_grade': round(q4_grade, 2),
+        'grade_info': get_final_grade_info(q4_grade)
+    }
 
 
 def get_final_grade_info(final_grade):
@@ -114,85 +211,143 @@ def get_final_grade_info(final_grade):
     }
 
 
-def calculate_scholar_grade(tentative_q1, tentative_q2=None, tentative_q3=None, tentative_q4=None):
+def display_quarter_results(quarter_name, quarter_info):
     """
-    Calculate a scholar's grade for available quarters.
+    Display the calculated grade information for a quarter.
     
     Args:
-        tentative_q1 (float): Raw score for Q1 (required)
-        tentative_q2 (float, optional): Raw score for Q2
-        tentative_q3 (float, optional): Raw score for Q3
-        tentative_q4 (float, optional): Raw score for Q4
-    
-    Returns:
-        dict: Contains grades for each quarter calculated
+        quarter_name (str): Name of the quarter (Q1, Q2, etc.)
+        quarter_info (dict): Dictionary containing grade calculations
     """
-    results = {}
+    print(f"\n{quarter_name}:")
+    print(f"  SA Average: {quarter_info['sa_average']}")
+    print(f"  FA Average: {quarter_info['fa_average']}")
     
-    # Q1 calculation
-    q1 = calculate_q1(tentative_q1)
-    results['Q1'] = get_final_grade_info(q1)
+    if 'tentative_grade' in quarter_info:
+        print(f"  Tentative Grade: {quarter_info['tentative_grade']}")
     
-    # Q2 calculation (if provided)
-    if tentative_q2 is not None:
-        q2 = calculate_q2(q1, tentative_q2)
-        results['Q2'] = get_final_grade_info(q2)
-    
-    # Q3 calculation (if provided and Q2 exists)
-    if tentative_q3 is not None and 'Q2' in results:
-        q3 = calculate_q3(float(results['Q2']['final_grade']), tentative_q3)
-        results['Q3'] = get_final_grade_info(q3)
-    
-    # Q4 calculation (if provided and Q3 exists)
-    if tentative_q4 is not None and 'Q3' in results:
-        q4 = calculate_q4(float(results['Q3']['final_grade']), tentative_q4)
-        results['Q4'] = get_final_grade_info(q4)
-    
-    return results
+    grade_info = quarter_info['grade_info']
+    print(f"  Quarter Grade: {grade_info['final_grade']}")
+    print(f"  Equivalent: {grade_info['equivalent']}")
+    print(f"  Adjectival: {grade_info['adjectival_equivalent']}")
 
 
 def display_results(scholar_name, results):
     """
-    Display the calculated grades in a formatted manner.
+    Display all calculated grades in a formatted manner.
     
     Args:
         scholar_name (str): Name of the scholar
-        results (dict): Dictionary containing grade calculations
+        results (dict): Dictionary containing all quarter calculations
     """
-    print(f"\n{'='*60}")
-    print(f"PSHS Grade Report for {scholar_name}")
-    print(f"{'='*60}")
+    print(f"\n{'='*70}")
+    print(f"PSHS GRADE REPORT FOR {scholar_name.upper()}")
+    print(f"{'='*70}")
+    print(f"\nFormula: Current Grade = (SA × 70%) + (FA × 30%)")
+    print(f"SA = Summative Assessment (70% weight)")
+    print(f"FA = Formative Assessment (30% weight)")
     
-    for quarter, grade_info in results.items():
-        print(f"\n{quarter}:")
-        print(f"  Final Grade: {grade_info['final_grade']}")
-        print(f"  Equivalent: {grade_info['equivalent']}")
-        print(f"  Adjectival: {grade_info['adjectival_equivalent']}")
+    for quarter, quarter_info in results.items():
+        display_quarter_results(quarter, quarter_info)
     
     # Display final grade if Q4 exists
     if 'Q4' in results:
-        print(f"\n{'='*60}")
-        print(f"FINAL GRADE: {results['Q4']['final_grade']} - {results['Q4']['adjectival_equivalent']}")
-        print(f"{'='*60}\n")
+        final_grade_info = results['Q4']['grade_info']
+        print(f"\n{'='*70}")
+        print(f"FINAL GRADE: {final_grade_info['final_grade']} - {final_grade_info['adjectival_equivalent']}")
+        print(f"{'='*70}\n")
+    else:
+        # Display highest quarter grade available
+        last_quarter = list(results.keys())[-1]
+        final_grade_info = results[last_quarter]['grade_info']
+        print(f"\n{'='*70}")
+        print(f"LATEST GRADE ({last_quarter}): {final_grade_info['final_grade']} - {final_grade_info['adjectival_equivalent']}")
+        print(f"{'='*70}\n")
+
+
+def input_scores(quarter_name):
+    """
+    Get SA and FA scores from user input.
+    
+    Args:
+        quarter_name (str): Name of the quarter
+    
+    Returns:
+        tuple: (sa_scores_list, fa_scores_list)
+    """
+    print(f"\n--- {quarter_name} Scores ---")
+    
+    # Input SA scores
+    sa_input = input(f"Enter {quarter_name} SA scores (comma-separated): ").strip()
+    sa_scores = []
+    if sa_input:
+        try:
+            sa_scores = [float(x.strip()) for x in sa_input.split(',')]
+        except ValueError:
+            print("Invalid SA input. Using empty list.")
+            sa_scores = []
+    
+    # Input FA scores
+    fa_input = input(f"Enter {quarter_name} FA scores (comma-separated): ").strip()
+    fa_scores = []
+    if fa_input:
+        try:
+            fa_scores = [float(x.strip()) for x in fa_input.split(',')]
+        except ValueError:
+            print("Invalid FA input. Using empty list.")
+            fa_scores = []
+    
+    return sa_scores, fa_scores
 
 
 if __name__ == "__main__":
-    # Example usage
-    scholar_name = input("Enter scholar's name: ")
+    scholar_name = input("Enter scholar's name: ").strip()
     
-    tentative_q1 = float(input("Enter Tentative Q1 score (0-100): "))
+    results = {}
     
-    tentative_q2_input = input("Enter Tentative Q2 score (0-100) or press Enter to skip: ")
-    tentative_q2 = float(tentative_q2_input) if tentative_q2_input else None
+    # Q1 Input and Calculation
+    sa_q1, fa_q1 = input_scores("Q1")
+    if sa_q1 or fa_q1:
+        q1_result = calculate_q1_final_grade(sa_q1, fa_q1)
+        results['Q1'] = q1_result
+        q1_grade = q1_result['quarter_grade']
+    else:
+        print("No Q1 scores provided.")
+        exit()
     
-    tentative_q3_input = input("Enter Tentative Q3 score (0-100) or press Enter to skip: ")
-    tentative_q3 = float(tentative_q3_input) if tentative_q3_input else None
+    # Q2 Input and Calculation (optional)
+    q2_input = input("\nDo you want to enter Q2 scores? (yes/no): ").strip().lower()
+    if q2_input in ['yes', 'y']:
+        sa_q2, fa_q2 = input_scores("Q2")
+        if sa_q2 or fa_q2:
+            q2_result = calculate_q2_final_grade(q1_grade, sa_q2, fa_q2)
+            results['Q2'] = q2_result
+            q2_grade = q2_result['quarter_grade']
+        else:
+            print("No Q2 scores provided.")
     
-    tentative_q4_input = input("Enter Tentative Q4 score (0-100) or press Enter to skip: ")
-    tentative_q4 = float(tentative_q4_input) if tentative_q4_input else None
+    # Q3 Input and Calculation (optional)
+    if 'Q2' in results:
+        q3_input = input("\nDo you want to enter Q3 scores? (yes/no): ").strip().lower()
+        if q3_input in ['yes', 'y']:
+            sa_q3, fa_q3 = input_scores("Q3")
+            if sa_q3 or fa_q3:
+                q3_result = calculate_q3_final_grade(q2_grade, sa_q3, fa_q3)
+                results['Q3'] = q3_result
+                q3_grade = q3_result['quarter_grade']
+            else:
+                print("No Q3 scores provided.")
     
-    # Calculate grades
-    results = calculate_scholar_grade(tentative_q1, tentative_q2, tentative_q3, tentative_q4)
+    # Q4 Input and Calculation (optional)
+    if 'Q3' in results:
+        q4_input = input("\nDo you want to enter Q4 scores? (yes/no): ").strip().lower()
+        if q4_input in ['yes', 'y']:
+            sa_q4, fa_q4 = input_scores("Q4")
+            if sa_q4 or fa_q4:
+                q4_result = calculate_q4_final_grade(q3_grade, sa_q4, fa_q4)
+                results['Q4'] = q4_result
+            else:
+                print("No Q4 scores provided.")
     
     # Display results
     display_results(scholar_name, results)
