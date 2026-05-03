@@ -20,11 +20,10 @@ def get_grades(quarter, kind):
             else:
                 grades.append(grade)
 
+    return grades
 
-print("\nTentative Grade: " + str(round(tentative_grade, 2)))
-    print("Quarter Grade: " + str(round(quarter_grade, 2)))
-    print_equivalent_grade(quarter_grade)
 
+def print_equivalent_grades(grade):
     if grade >= 96 and grade <= 100:
         print("Equivalent Grade: 1.00")
         print("Adjectival Equivalent: EXCELLENT")
