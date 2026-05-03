@@ -21,11 +21,6 @@ def get_grades(quarter, kind):
                 grades.append(grade)
 
 
-
-quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
-quarter_grades = []
-
-
 print("\nTentative Grade: " + str(round(tentative_grade, 2)))
     print("Quarter Grade: " + str(round(quarter_grade, 2)))
     print_equivalent_grade(quarter_grade)
@@ -60,4 +55,8 @@ print("\nTentative Grade: " + str(round(tentative_grade, 2)))
     elif grade >= 40 and grade <= 49.99:
         print("Equivalent Grade: 4.00")
         print("Adjectival Equivalent: FAILED ON CONDITION")
+    else:
+        print("Equivalent Grade: 5.00")
+        print("Adjectival Equivalent: FAILED")
+
 
