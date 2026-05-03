@@ -87,3 +87,10 @@ for i in range(4):
 
 print("Final Grade: " + str(round(final_grade, 2)))
 print_equivalent_grade(final_grade)
+
+
+
+# FA average is 30%
+# SA average is 70%
+# 1st Quarter has no previous grade
+# 2nd to 4th quarter uses 2/3 current quarter and 1/3 previous quarter
