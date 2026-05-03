@@ -1,8 +1,20 @@
 def get_grades(quarter, kind):
     grades = []
 
-print("\n" + quarter + " " + kind + " Grades")
+    print("\n" + quarter + " " + kind + " Grades")
     print("Type the grades one by one. Press Enter if you are done")
+
+    while True: 
+        grade_input = input(kind + " grade #" + str(len(grades) + 1) + ": ")
+
+        if grade_input == "":
+            if len(grades) == 0:
+                print("You need to enter at least one grade.")
+            else:
+                break
+        else:
+            grade = float(grade_input)
+
 
 quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
 quarter_grades = []
