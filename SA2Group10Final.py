@@ -71,3 +71,19 @@ for i in range(4):
     summative_average = sum(summative_grades) / len(summative_grades)
 
     tentative_grade = (formative_average * 0.30) + (summative_average * 0.70)
+
+
+    if i == 0:
+        quarter_grade = tentative_grade
+    else:
+        quarter_grade = (tentative_grade * (2 / 3)) + (quarter_grades[i - 1] * (1 / 3))
+
+    quarter_grades.append(quarter_grade)
+
+    print("\nTentative Grade: " + str(round(tentative_grade, 2)))
+    print("Quarter Grade: " + str(round(quarter_grade, 2)))
+    print_equivalent_grade(quarter_grade)
+
+
+print("Final Grade: " + str(round(final_grade, 2)))
+print_equivalent_grade(final_grade)
