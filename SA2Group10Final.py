@@ -58,4 +58,16 @@ def print_equivalent_grades(grade):
         print("Equivalent Grade: 5.00")
         print("Adjectival Equivalent: FAILED")
 
+quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
+quarter_grades = []
+
+for i in range(4):
+    print(quarters[i])
+
+    formative_grades = get_grades(quarters[i], "Formative Assessment")
+    summative_grades = get_grades(quarters[i], "Summative Assessment")
+
+    formative_average = sum(formative_grades) / len(formative_grades)
+    summative_average = sum(summative_grades) / len(summative_grades)
+
 
