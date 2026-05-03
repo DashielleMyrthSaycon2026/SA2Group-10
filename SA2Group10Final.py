@@ -1,10 +1,17 @@
+"""
+Prompts the user for the Assesment rating for each student in the specified quarter.
+        Args: 
+            - quarter: Quarter period for the academic year.
+            - kind: Formative Assesment or Summative Assesment. 
+        Returns: 
+            - grades: List of grades for kind of assesment for that quarter.
+"""
 def get_grades(quarter, kind):
     grades = []
-# This part defines what quarter and what kind of assessment. [] This is used for listing things and indexs
 
     print("\n" + quarter + " " + kind + " Grades")
     print("Type the grades one by one. Press Enter if you are done")
-# This gets each quarters SA and FA grade percentage
+
 
     while True: 
         grade_input = input(kind + " grade #" + str(len(grades) + 1) + ": ")
