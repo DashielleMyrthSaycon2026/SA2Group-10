@@ -70,4 +70,4 @@ for i in range(4):
     formative_average = sum(formative_grades) / len(formative_grades)
     summative_average = sum(summative_grades) / len(summative_grades)
 
-
+    tentative_grade = (formative_average * 0.30) + (summative_average * 0.70)
