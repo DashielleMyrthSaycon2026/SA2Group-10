@@ -15,6 +15,12 @@ def get_grades(quarter, kind):
         else:
             grade = float(grade_input)
 
+            if grade < 0 or grade > 100:
+                print("Invalid grade. It should only be from 0 to 100.")
+            else:
+                grades.append(grade)
+
+
 
 quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
 quarter_grades = []
