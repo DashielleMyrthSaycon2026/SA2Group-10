@@ -1,2 +1,45 @@
 def get_grades(quarter, kind):
     grades = []
+
+print("\n" + quarter + " " + kind + " Grades")
+    print("Type the grades one by one. Press Enter if you are done")
+
+quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
+quarter_grades = []
+
+
+print("\nTentative Grade: " + str(round(tentative_grade, 2)))
+    print("Quarter Grade: " + str(round(quarter_grade, 2)))
+    print_equivalent_grade(quarter_grade)
+
+    if grade >= 96 and grade <= 100:
+        print("Equivalent Grade: 1.00")
+        print("Adjectival Equivalent: EXCELLENT")
+    elif grade >= 90 and grade <= 95.99:
+        print("Equivalent Grade: 1.25")
+        print("Adjectival Equivalent: VERY GOOD")
+    elif grade >= 84 and grade <= 89.99:
+        print("Equivalent Grade: 1.50")
+        print("Adjectival Equivalent: VERY GOOD")
+    elif grade >= 78 and grade <= 83.99:
+        print("Equivalent Grade: 1.75")
+        print("Adjectival Equivalent: GOOD")
+    elif grade >= 72 and grade <= 77.99:
+        print("Equivalent Grade: 2.00")
+        print("Adjectival Equivalent: GOOD")
+    elif grade >= 66 and grade <= 71.99:
+        print("Equivalent Grade: 2.25")
+        print("Adjectival Equivalent: SATISFACTORY")
+    elif grade >= 60 and grade <= 65.99:
+        print("Equivalent Grade: 2.50")
+        print("Adjectival Equivalent: SATISFACTORY")
+    elif grade >= 55 and grade <= 59.99:
+        print("Equivalent Grade: 2.75")
+        print("Adjectival Equivalent: FAIR")
+    elif grade >= 50 and grade <= 54.99:
+        print("Equivalent Grade: 3.00")
+        print("Adjectival Equivalent: FAIR")
+    elif grade >= 40 and grade <= 49.99:
+        print("Equivalent Grade: 4.00")
+        print("Adjectival Equivalent: FAILED ON CONDITION")
+
