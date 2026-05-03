@@ -1,8 +1,10 @@
 def get_grades(quarter, kind):
     grades = []
+# This part defines what quarter and what kind of assessment. [] This is used for listing things and indexs
 
     print("\n" + quarter + " " + kind + " Grades")
     print("Type the grades one by one. Press Enter if you are done")
+# This gets each quarters SA and FA grade percentage
 
     while True: 
         grade_input = input(kind + " grade #" + str(len(grades) + 1) + ": ")
@@ -57,10 +59,11 @@ def print_equivalent_grades(grade):
     else:
         print("Equivalent Grade: 5.00")
         print("Adjectival Equivalent: FAILED")
+# Determines the Equivalent Grade and its Adjectival equivalent
 
 quarters = ["1st Quarter", "2nd Quarter", "3rd Quarter", "4th Quarter"]
 quarter_grades = []
-
+# 
 for i in range(4):
     print(quarters[i])
 
@@ -71,6 +74,7 @@ for i in range(4):
     summative_average = sum(summative_grades) / len(summative_grades)
 
     tentative_grade = (formative_average * 0.30) + (summative_average * 0.70)
+    
 
 
     if i == 0:
