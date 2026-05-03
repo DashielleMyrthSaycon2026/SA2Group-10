@@ -82,11 +82,13 @@ for i in range(4):
 
     print("\nTentative Grade: " + str(round(tentative_grade, 2)))
     print("Quarter Grade: " + str(round(quarter_grade, 2)))
-    print_equivalent_grade(quarter_grade)
+    print_equivalent_grades(quarter_grade)
 
+
+final_grade = quarter_grades[3]
 
 print("Final Grade: " + str(round(final_grade, 2)))
-print_equivalent_grade(final_grade)
+print_equivalent_grades(final_grade)
 
 
 
